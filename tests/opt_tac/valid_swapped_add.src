@@ -1,0 +1,6 @@
+a = input()
+b = input()
+t1 = a + b
+t2 = b + a
+print t1
+print t2

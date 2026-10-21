@@ -1,0 +1,2 @@
+int a = input();
+print(1);

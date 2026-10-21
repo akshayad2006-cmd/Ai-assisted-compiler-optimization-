@@ -1,0 +1,5 @@
+[constant_propagation] t1 = a / 0  ->  t1 = 5 / 0
+[copy_propagation] print b  ->  print t1
+[dead_code_elimination] a = 5  ->  (removed)
+[dead_code_elimination] b = t1  ->  (removed)
+Total changes: 4

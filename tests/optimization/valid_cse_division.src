@@ -1,0 +1,6 @@
+int a = input();
+int b = input();
+int x = a / b;
+int y = a / b;
+print(x);
+print(y);

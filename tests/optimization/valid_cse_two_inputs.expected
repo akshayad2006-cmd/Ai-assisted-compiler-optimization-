@@ -1,0 +1,6 @@
+t1 = input()
+t2 = t1 + 1
+t3 = input()
+t4 = t3 + 1
+print t2
+print t4

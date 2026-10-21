@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "program": {
+    "instruction_count": 3,
+    "static_cost": 8,
+    "optimized_instruction_count": 2,
+    "optimized_static_cost": 7
+  },
+  "cost_model": {"copy": 1, "add": 1, "sub": 1, "mul": 3, "div": 10, "input": 5, "print": 2},
+  "instructions": [
+    {"index": 1, "text": "t1 = input()"},
+    {"index": 2, "text": "a = t1"},
+    {"index": 3, "text": "print 1"}
+  ],
+  "candidates": [
+    {"id": "C1", "rule": "dead_code_elimination", "instruction": 2, "before": "a = t1", "after": "(removed)", "removes_instruction": true, "static_cost_delta": -1, "requires": []}
+  ],
+  "blocked": []
+}

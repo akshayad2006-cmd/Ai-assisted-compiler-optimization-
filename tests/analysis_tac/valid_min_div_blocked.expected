@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "program": {
+    "instruction_count": 2,
+    "static_cost": 12,
+    "optimized_instruction_count": 2,
+    "optimized_static_cost": 12
+  },
+  "cost_model": {"copy": 1, "add": 1, "sub": 1, "mul": 3, "div": 10, "input": 5, "print": 2},
+  "instructions": [
+    {"index": 1, "text": "t1 = -2147483648 / -1"},
+    {"index": 2, "text": "print t1"}
+  ],
+  "candidates": [],
+  "blocked": [
+    {"rule": "constant_folding", "instruction": 1, "text": "t1 = -2147483648 / -1", "reason": "result does not fit in a 32-bit int"}
+  ]
+}

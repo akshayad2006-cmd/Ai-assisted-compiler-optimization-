@@ -1,0 +1,4 @@
+[constant_propagation] print x  ->  print 10
+[dead_code_elimination] x = 10  ->  (removed)
+[dead_code_elimination] y = 20  ->  (removed)
+Total changes: 3

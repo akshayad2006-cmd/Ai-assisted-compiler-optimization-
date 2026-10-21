@@ -1,0 +1,3 @@
+t1 = input()
+t3 = t1 + 10
+print t3

@@ -1,0 +1,3 @@
+int t1 = 5;
+int y = t1 + 1;
+print(y);

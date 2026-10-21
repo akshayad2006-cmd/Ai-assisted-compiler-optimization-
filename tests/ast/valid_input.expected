@@ -1,0 +1,7 @@
+Program
+├── Declaration a
+│   └── input()
+└── Declaration b
+    └── +
+        ├── a
+        └── input()

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "program": {
+    "instruction_count": 0,
+    "static_cost": 0,
+    "optimized_instruction_count": 0,
+    "optimized_static_cost": 0
+  },
+  "cost_model": {"copy": 1, "add": 1, "sub": 1, "mul": 3, "div": 10, "input": 5, "print": 2},
+  "instructions": [],
+  "candidates": [],
+  "blocked": []
+}

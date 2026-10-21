@@ -1,0 +1,4 @@
+int a = 7 / 2;
+int b = 10 - 20;
+print(a);
+print(b);

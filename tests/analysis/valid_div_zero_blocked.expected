@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "program": {
+    "instruction_count": 3,
+    "static_cost": 13,
+    "optimized_instruction_count": 2,
+    "optimized_static_cost": 12
+  },
+  "cost_model": {"copy": 1, "add": 1, "sub": 1, "mul": 3, "div": 10, "input": 5, "print": 2},
+  "instructions": [
+    {"index": 1, "text": "t1 = 7 / 0"},
+    {"index": 2, "text": "a = t1"},
+    {"index": 3, "text": "print a"}
+  ],
+  "candidates": [
+    {"id": "C1", "rule": "copy_propagation", "instruction": 3, "before": "print a", "after": "print t1", "removes_instruction": false, "static_cost_delta": 0, "requires": []}
+  ],
+  "blocked": [
+    {"rule": "constant_folding", "instruction": 1, "text": "t1 = 7 / 0", "reason": "division by zero"}
+  ]
+}

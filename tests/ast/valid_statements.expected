@@ -1,0 +1,9 @@
+Program
+├── Declaration x
+│   └── 10
+├── Assignment x
+│   └── +
+│       ├── x
+│       └── 5
+└── Print
+    └── x

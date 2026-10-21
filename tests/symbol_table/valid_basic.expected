@@ -1,0 +1,4 @@
+Symbol table (global scope):
+  x : int (declared at 1:1)
+  y : int (declared at 2:1)
+  z : int (declared at 3:1)

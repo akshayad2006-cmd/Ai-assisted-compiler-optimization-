@@ -1,0 +1,2 @@
+int d = input() - input();
+print(d);

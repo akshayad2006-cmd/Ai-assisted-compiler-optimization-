@@ -1,0 +1,4 @@
+int x = 10 * 20;
+int y = x + 0;
+int unused = 50;
+print(y);

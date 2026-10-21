@@ -1,0 +1,219 @@
+
+import { useEffect, useState } from 'react'
+import './App.css'
+
+const API = 'http://127.0.0.1:8000'
+
+const stages = [
+  { id: 'tokens', label: 'Lexer', flag: 'tokens' },
+  { id: 'parse', label: 'Parser', flag: 'parse' },
+  { id: 'ast', label: 'AST', flag: 'ast' },
+  { id: 'check', label: 'Semantic Analysis', flag: 'check' },
+  { id: 'symbols', label: 'Symbol Table', flag: 'symbols' },
+  { id: 'tac', label: 'Three-Address Code', flag: 'tac' },
+  { id: 'optimize', label: 'Rule-Based Optimizer', flag: 'optimize' },
+  { id: 'opt_report', label: 'Optimization Report', flag: 'opt_report' },
+  { id: 'analyze', label: 'AI Analysis', flag: 'analyze' },
+  { id: 'performance', label: 'Performance', flag: 'performance' },
+  { id: 'llvm', label: 'LLVM IR', flag: 'llvm' },
+]
+
+export default function App() {
+  const [source, setSource] = useState('')
+  const [examples, setExamples] = useState([])
+  const [selected, setSelected] = useState('demo2.src')
+  const [stage, setStage] = useState('optimize')
+  const [result, setResult] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [health, setHealth] = useState('Checking backend...')
+  const [error, setError] = useState('')
+  const [aiResult, setAiResult] = useState(null)
+
+  useEffect(() => {
+    fetch(`${API}/api/health`)
+      .then((r) => r.json())
+      .then((data) => setHealth(data.status === 'ok' ? 'Connected' : 'Unavailable'))
+      .catch(() => setHealth('Offline'))
+
+    fetch(`${API}/api/examples`)
+      .then((r) => r.json())
+      .then((data) => {
+        setExamples(data)
+        const example = data.find((item) => item.name === 'demo2.src') || data[0]
+        if (example) {
+          setSelected(example.name)
+          setSource(example.source)
+        }
+      })
+      .catch(() => setError('Could not load examples. Check that FastAPI is running.'))
+  }, [])
+
+  async function runStage(stageId = stage) {
+    setLoading(true)
+    setError('')
+    setAiResult(null)
+    try {
+      const response = await fetch(`${API}/api/run/${stageId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ source }),
+      })
+      const data = await response.json()
+      if (!response.ok) throw new Error(data.detail || 'Compiler request failed')
+      setResult(typeof data.stdout === 'string' ? data.stdout : JSON.stringify(data, null, 2))
+      if (data.stderr) setError(data.stderr)
+    } catch (err) {
+      setError(err.message || 'Unable to reach the backend')
+      setResult('')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function runAI(provider = 'fake:greedy') {
+    setLoading(true)
+    setError('')
+    setAiResult(null)
+    try {
+      const response = await fetch(`${API}/api/ai`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ source, provider }),
+      })
+      const data = await response.json()
+      if (!response.ok) throw new Error(data.detail || 'AI pipeline request failed')
+      setAiResult(data)
+      setResult(JSON.stringify(data, null, 2))
+    } catch (err) {
+      setError(err.message || 'Unable to run the AI pipeline')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  function chooseExample(name) {
+    const example = examples.find((item) => item.name === name)
+    if (example) {
+      setSelected(name)
+      setSource(example.source)
+      setResult('')
+      setError('')
+      setAiResult(null)
+    }
+  }
+
+  return (
+    <main className="app-shell">
+      <header className="topbar">
+        <div className="brand">
+          <div className="brand-mark">λ</div>
+          <div>
+            <h1>Opti<span>Core</span></h1>
+            <p>AI-ASSISTED COMPILER OPTIMIZATION</p>
+          </div>
+        </div>
+        <div className="connection">
+          <span className={`status-dot ${health === 'Connected' ? 'online' : ''}`} />
+          Backend: <strong>{health}</strong>
+        </div>
+      </header>
+
+      <section className="hero">
+        <div>
+          <div className="eyebrow">COMPILER DESIGN LAB · PROJECT WORKSPACE</div>
+          <h2>Understand your code.<br /><span>Optimize its execution.</span></h2>
+          <p>Explore compiler stages, inspect optimization decisions, and validate AI-assisted recommendations.</p>
+        </div>
+        <div className="hero-chip"><span>●</span> C++ · Python · LLVM</div>
+      </section>
+
+      <section className="workspace">
+        <aside className="sidebar panel">
+          <div className="section-label">WORKSPACE</div>
+          <label className="field-label" htmlFor="example">Example program</label>
+          <select id="example" value={selected} onChange={(e) => chooseExample(e.target.value)}>
+            {examples.map((item) => <option key={item.name} value={item.name}>{item.name}</option>)}
+          </select>
+
+          <div className="section-label pipeline-label">COMPILER PIPELINE</div>
+          <div className="stage-list">
+            {stages.map((item, index) => (
+              <button
+                key={item.id}
+                className={`stage-button ${stage === item.id ? 'active' : ''}`}
+                onClick={() => setStage(item.id)}
+              >
+                <span className="stage-number">{String(index + 1).padStart(2, '0')}</span>
+                <span>{item.label}</span>
+                {stage === item.id && <span className="stage-arrow">›</span>}
+              </button>
+            ))}
+          </div>
+          <div className="sidebar-note">
+            <span>i</span>
+            Results are produced by your local compiler backend.
+          </div>
+        </aside>
+
+        <section className="editor-panel panel">
+          <div className="panel-heading">
+            <div>
+              <div className="section-label">SOURCE EDITOR</div>
+              <h3>Program input <span className="file-tag">.src</span></h3>
+            </div>
+            <span className="language-tag">C-like language</span>
+          </div>
+          <textarea
+            className="code-editor"
+            spellCheck="false"
+            value={source}
+            onChange={(e) => setSource(e.target.value)}
+            aria-label="Source code editor"
+          />
+          <div className="editor-footer">
+            <span>{source.split('\n').length} lines · {source.length} characters</span>
+            <button className="secondary-button" onClick={() => chooseExample(selected)}>Reset example</button>
+          </div>
+          <div className="run-actions">
+            <button className="primary-button" disabled={loading || !source.trim()} onClick={() => runStage()}>
+              {loading ? 'Running...' : `Run ${stages.find((item) => item.id === stage)?.label || 'Stage'} →`}
+            </button>
+            <button className="secondary-button" disabled={loading || !source.trim()} onClick={() => runAI('fake:greedy')}>
+              Run AI recommendations
+            </button>
+            <button className="secondary-button" disabled={loading || !source.trim()} onClick={() => runAI('fake:none')}>
+              Baseline
+            </button>
+          </div>
+          <div className="stage-hint">
+            Selected stage: <strong>{stages.find((item) => item.id === stage)?.label}</strong>
+          </div>
+        </section>
+
+        <section className="results-panel panel">
+          <div className="panel-heading">
+            <div>
+              <div className="section-label">EXECUTION OUTPUT</div>
+              <h3>Compiler results</h3>
+            </div>
+            <span className="output-tag">{loading ? 'RUNNING' : 'LIVE OUTPUT'}</span>
+          </div>
+          {error && <div className="error-box">{error}</div>}
+          <pre className="result-output">{result || 'Choose a compiler stage and click Run to inspect the actual output.'}</pre>
+          {aiResult && (
+            <div className="ai-summary">
+              <h4>AI pipeline response</h4>
+              <p>Response received from the local recommendation pipeline.</p>
+              <pre>{JSON.stringify(aiResult, null, 2)}</pre>
+            </div>
+          )}
+        </section>
+      </section>
+
+      <footer className="footer">
+        <span>OPTICORE · AI-ASSISTED COMPILER OPTIMIZATION</span>
+        <span>Local development workspace</span>
+      </footer>
+    </main>
+  )
+}

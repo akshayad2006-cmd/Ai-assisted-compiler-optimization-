@@ -1,0 +1,4 @@
+int x = input() + 1;
+int y = input() + 1;
+print(x);
+print(y);

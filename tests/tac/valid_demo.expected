@@ -1,0 +1,6 @@
+t1 = 10 * 20
+x = t1
+t2 = x + 0
+y = t2
+unused = 50
+print y

@@ -1,0 +1,3 @@
+Symbol table (global scope):
+  a : int (declared at 1:1)
+  b : int (declared at 2:1)

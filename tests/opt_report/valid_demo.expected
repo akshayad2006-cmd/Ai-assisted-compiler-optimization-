@@ -1,0 +1,12 @@
+[constant_folding] t1 = 10 * 20  ->  t1 = 200
+[algebraic_simplification] t2 = x + 0  ->  t2 = x
+[copy_propagation] t2 = x  ->  t2 = t1
+[copy_propagation] y = t2  ->  y = t1
+[copy_propagation] print y  ->  print t1
+[dead_code_elimination] x = t1  ->  (removed)
+[dead_code_elimination] t2 = t1  ->  (removed)
+[dead_code_elimination] y = t1  ->  (removed)
+[dead_code_elimination] unused = 50  ->  (removed)
+[constant_propagation] print t1  ->  print 200
+[dead_code_elimination] t1 = 200  ->  (removed)
+Total changes: 11

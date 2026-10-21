@@ -1,0 +1,6 @@
+t1 = input()
+t2 = input()
+t5 = t1 + t2
+t7 = t5 * t5
+print t1
+print t7

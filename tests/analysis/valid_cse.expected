@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "program": {
+    "instruction_count": 10,
+    "static_cost": 20,
+    "optimized_instruction_count": 5,
+    "optimized_static_cost": 15
+  },
+  "cost_model": {"copy": 1, "add": 1, "sub": 1, "mul": 3, "div": 10, "input": 5, "print": 2},
+  "instructions": [
+    {"index": 1, "text": "t1 = input()"},
+    {"index": 2, "text": "a = t1"},
+    {"index": 3, "text": "t2 = input()"},
+    {"index": 4, "text": "b = t2"},
+    {"index": 5, "text": "t3 = a + b"},
+    {"index": 6, "text": "x = t3"},
+    {"index": 7, "text": "t4 = a + b"},
+    {"index": 8, "text": "y = t4"},
+    {"index": 9, "text": "print x"},
+    {"index": 10, "text": "print y"}
+  ],
+  "candidates": [
+    {"id": "C1", "rule": "copy_propagation", "instruction": 5, "before": "t3 = a + b", "after": "t3 = t1 + t2", "removes_instruction": false, "static_cost_delta": 0, "requires": []},
+    {"id": "C2", "rule": "copy_propagation", "instruction": 7, "before": "t4 = a + b", "after": "t4 = t1 + t2", "removes_instruction": false, "static_cost_delta": 0, "requires": []},
+    {"id": "C3", "rule": "common_subexpression_elimination", "instruction": 7, "before": "t4 = a + b", "after": "t4 = t3", "removes_instruction": false, "static_cost_delta": 0, "requires": []},
+    {"id": "C4", "rule": "copy_propagation", "instruction": 9, "before": "print x", "after": "print t3", "removes_instruction": false, "static_cost_delta": 0, "requires": []},
+    {"id": "C5", "rule": "copy_propagation", "instruction": 10, "before": "print y", "after": "print t4", "removes_instruction": false, "static_cost_delta": 0, "requires": []}
+  ],
+  "blocked": []
+}

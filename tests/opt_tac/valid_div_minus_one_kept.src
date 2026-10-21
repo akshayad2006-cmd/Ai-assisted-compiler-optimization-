@@ -1,0 +1,3 @@
+t2 = input()
+t4 = t2 / -1
+print 5

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "program": {
+    "instruction_count": 7,
+    "static_cost": 21,
+    "optimized_instruction_count": 7,
+    "optimized_static_cost": 21
+  },
+  "cost_model": {"copy": 1, "add": 1, "sub": 1, "mul": 3, "div": 10, "input": 5, "print": 2},
+  "instructions": [
+    {"index": 1, "text": "a = input()"},
+    {"index": 2, "text": "b = input()"},
+    {"index": 3, "text": "t1 = a + b"},
+    {"index": 4, "text": "a = input()"},
+    {"index": 5, "text": "t2 = a + b"},
+    {"index": 6, "text": "print t1"},
+    {"index": 7, "text": "print t2"}
+  ],
+  "candidates": [],
+  "blocked": []
+}

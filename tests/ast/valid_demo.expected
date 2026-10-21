@@ -1,0 +1,13 @@
+Program
+├── Declaration x
+│   └── *
+│       ├── 10
+│       └── 20
+├── Declaration y
+│   └── +
+│       ├── x
+│       └── 0
+├── Declaration unused
+│   └── 50
+└── Print
+    └── y

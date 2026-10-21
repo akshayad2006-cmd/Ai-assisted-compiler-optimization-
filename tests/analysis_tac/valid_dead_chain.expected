@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "program": {
+    "instruction_count": 4,
+    "static_cost": 11,
+    "optimized_instruction_count": 2,
+    "optimized_static_cost": 7
+  },
+  "cost_model": {"copy": 1, "add": 1, "sub": 1, "mul": 3, "div": 10, "input": 5, "print": 2},
+  "instructions": [
+    {"index": 1, "text": "a = input()"},
+    {"index": 2, "text": "t1 = a * 2"},
+    {"index": 3, "text": "t2 = t1 + 1"},
+    {"index": 4, "text": "print a"}
+  ],
+  "candidates": [
+    {"id": "C1", "rule": "dead_code_elimination", "instruction": 2, "before": "t1 = a * 2", "after": "(removed)", "removes_instruction": true, "static_cost_delta": -3, "requires": ["C2"]},
+    {"id": "C2", "rule": "dead_code_elimination", "instruction": 3, "before": "t2 = t1 + 1", "after": "(removed)", "removes_instruction": true, "static_cost_delta": -1, "requires": []}
+  ],
+  "blocked": []
+}

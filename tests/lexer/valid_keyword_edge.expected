@@ -1,0 +1,4 @@
+[1:1] IDENTIFIER(integer)
+[1:9] IDENTIFIER(printx)
+[1:16] INT
+[2:1] EOF

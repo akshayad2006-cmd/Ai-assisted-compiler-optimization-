@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "program": {
+    "instruction_count": 3,
+    "static_cost": 4,
+    "optimized_instruction_count": 1,
+    "optimized_static_cost": 2
+  },
+  "cost_model": {"copy": 1, "add": 1, "sub": 1, "mul": 3, "div": 10, "input": 5, "print": 2},
+  "instructions": [
+    {"index": 1, "text": "x = 10"},
+    {"index": 2, "text": "y = x + 5"},
+    {"index": 3, "text": "print y"}
+  ],
+  "candidates": [
+    {"id": "C1", "rule": "constant_propagation", "instruction": 2, "before": "y = x + 5", "after": "y = 10 + 5", "removes_instruction": false, "static_cost_delta": 0, "requires": []}
+  ],
+  "blocked": []
+}

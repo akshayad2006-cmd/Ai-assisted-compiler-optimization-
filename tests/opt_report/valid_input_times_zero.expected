@@ -1,0 +1,7 @@
+[algebraic_simplification] t2 = a * 0  ->  t2 = 0
+[copy_propagation] print b  ->  print t2
+[dead_code_elimination] a = t1  ->  (removed)
+[dead_code_elimination] b = t2  ->  (removed)
+[constant_propagation] print t2  ->  print 0
+[dead_code_elimination] t2 = 0  ->  (removed)
+Total changes: 6

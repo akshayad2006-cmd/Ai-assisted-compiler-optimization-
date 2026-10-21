@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "program": {
+    "instruction_count": 3,
+    "static_cost": 6,
+    "optimized_instruction_count": 1,
+    "optimized_static_cost": 2
+  },
+  "cost_model": {"copy": 1, "add": 1, "sub": 1, "mul": 3, "div": 10, "input": 5, "print": 2},
+  "instructions": [
+    {"index": 1, "text": "t1 = 10 * 20"},
+    {"index": 2, "text": "x = t1"},
+    {"index": 3, "text": "print x"}
+  ],
+  "candidates": [
+    {"id": "C1", "rule": "constant_folding", "instruction": 1, "before": "t1 = 10 * 20", "after": "t1 = 200", "removes_instruction": false, "static_cost_delta": -2, "requires": []},
+    {"id": "C2", "rule": "copy_propagation", "instruction": 3, "before": "print x", "after": "print t1", "removes_instruction": false, "static_cost_delta": 0, "requires": []}
+  ],
+  "blocked": []
+}

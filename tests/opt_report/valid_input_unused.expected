@@ -1,0 +1,4 @@
+[copy_propagation] print b  ->  print t2
+[dead_code_elimination] a = t1  ->  (removed)
+[dead_code_elimination] b = t2  ->  (removed)
+Total changes: 3

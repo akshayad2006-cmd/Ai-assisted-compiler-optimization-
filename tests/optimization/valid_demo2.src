@@ -1,0 +1,7 @@
+int a = input();
+int b = input();
+int x = a * 1 + 0;
+int y = (a + b) * (a + b);
+int dead = a - b;
+print(x);
+print(y);

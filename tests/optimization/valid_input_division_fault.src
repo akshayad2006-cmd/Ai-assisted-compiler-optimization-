@@ -1,0 +1,3 @@
+int a = input();
+int b = 10 / a;
+print(1);
